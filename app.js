@@ -1,15 +1,15 @@
-var express = require('express');
-var timeout = require('connect-timeout');
-var bodyParser = require('body-parser');
+const express = require('express');
+const timeout = require('connect-timeout');
+const bodyParser = require('body-parser');
 
-var app = express();
+const app = express();
+
+const haltOnTimedout = (req, res, next) => {
+    if (!req.timedout) next();
+};
 
 app.use(timeout(5000));
 app.use(haltOnTimedout);
-
-function haltOnTimedout(req, res, next) {
-	if (!req.timedout) next();
-}
 
 app.use(bodyParser.json());
 
